@@ -121,7 +121,7 @@ class UserController extends Controller
     {
         return response()->json([
             'message'=>
-            'Prueba con git de api con este parametro: '.$id
+            'Prueba 2 con git  de api con este parametro: '.$id
         ],404); 
     }
 
