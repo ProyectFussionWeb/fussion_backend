@@ -21,6 +21,9 @@ class InArticuloController extends Controller
             $in_articulos = $in_articulos->where('INV_ARTICULO','like','%'.$request->text.'%')
             ->orWhere('INV_DESCRIPCION','like','%'.$request->text.'%');      
         }
+        if(!is_null($request->obsoleto)) {
+            $in_articulos = $in_articulos->where('INV_OBSOLETO',$request->obsoleto);      
+        }
         $in_articulos = $in_articulos
         ->paginate($request->perPage);
         if(sizeof($in_articulos) == 0)
