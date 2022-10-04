@@ -49,7 +49,7 @@ class FaFacturaController extends Controller
         }
 
         $fa_facturas = $fa_facturas
-        ->with(['articulos'])
+        ->with(['articulos','agente'])
         ->orderBy('FAC_FECHA', 'DESC')
         ->paginate($request->perPage);
         if(sizeof($fa_facturas) == 0)

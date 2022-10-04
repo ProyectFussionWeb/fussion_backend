@@ -158,4 +158,7 @@ class FaFactura extends Model
     public function articulos(){
         return $this->hasMany(FaFactpda::class,"PDAS_FACTURA", "FAC_FACTURA");
     }
+    public function agente(){
+        return $this->belongsTo(FaAgente::class,"FAC_AGENTE", "AGE_AGENTE");
+    }
 }
