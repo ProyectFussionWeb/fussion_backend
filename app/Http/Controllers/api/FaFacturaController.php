@@ -124,8 +124,10 @@ class FaFacturaController extends Controller
                 $FaFactpda->PDAS_PIEPS = '0.0';
                 $FaFactpda->PDAS_ARTCVESAT = $articulo['PDAS_ARTCVESAT'];
 
-                $unidad = InUnidad::where('UNI_DESCRIPCION',$articulo['PDAS_UNIDAD'])->first();
-                $FaFactpda->PDAS_UDADCVESAT = $unidad->UNI_CVESAT;
+                $unidad = InUnidad::where('UNI_DESCRIPCION',$articulo['PDAS_UNIDAD'])
+                ->orWhere('UNI_CODIGO',$articulo['PDAS_UNIDAD'])
+                ->first();
+                $unidad?$FaFactpda->PDAS_UDADCVESAT = $unidad->UNI_CVESAT : $FaFactpda->PDAS_UDADCVESAT = '';
 
                 $FaFactpda->PDAS_IMPORTE = $articulo['PDAS_IMPORTE'];
                 $FaFactpda->PDAS_IMPORTEIVA = $articulo['PDAS_IMPORTEIVA'];
@@ -278,6 +280,7 @@ class FaFacturaController extends Controller
         if($fa_factura){
              
             FaFactura::where('FAC_FACTURA',  $id)->delete();
+            FaFactpda::where('PDAS_FACTURA',$id)->delete();
             return response()->json(['data'=>'Factura eliminada'],200);
         }else{
             return response()->json(['error'=>'No se encuentra factura'],404);
